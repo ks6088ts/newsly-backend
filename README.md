@@ -1,6 +1,6 @@
-![test](https://github.com/ks6088ts/template-go/workflows/test/badge.svg)
-[![Go Report Card](https://goreportcard.com/badge/github.com/ks6088ts/template-go)](https://goreportcard.com/report/github.com/ks6088ts/template-go)
-[![GoDoc](https://godoc.org/github.com/ks6088ts/template-go?status.svg)](https://godoc.org/github.com/ks6088ts/template-go)
+![test](https://github.com/ks6088ts/newsly-backend/workflows/test/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ks6088ts/newsly-backend)](https://goreportcard.com/report/github.com/ks6088ts/newsly-backend)
+[![GoDoc](https://godoc.org/github.com/ks6088ts/newsly-backend?status.svg)](https://godoc.org/github.com/ks6088ts/newsly-backend)
 
-# template-go
+# newsly-backend
 Template repository for Go
