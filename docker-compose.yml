@@ -19,6 +19,30 @@ services:
       - ${PORT}:8080
     networks:
       - shared-network
+  db:
+    build:
+      context: .
+      dockerfile: ./docker/db/Dockerfile
+    container_name: db
+    environment:
+      - POSTGRES_DB=${POSTGRESQL_DB}
+      - POSTGRES_USER=${POSTGRESQL_USER}
+      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRES_INITDB_ARGS=${POSTGRESQL_INITDB_ARGS}
+    ports:
+      # for testing only
+      - ${POSTGRESQL_PORT}:5432
+    user: root
+    volumes:
+      - ./docker/db/init:/docker-entrypoint-initdb.d
+      - ./data:/data
+      - pg-data-article:/var/lib/pgdata
+    networks:
+      - shared-network
+
+volumes:
+  pg-data-article:
+    driver: local
 
 networks:
   shared-network:
