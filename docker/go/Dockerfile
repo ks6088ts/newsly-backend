@@ -20,4 +20,5 @@ RUN apt-get -y update && \
 COPY Makefile Makefile
 
 RUN make install-dev && \
-    make install-cobra
+    make install-cobra && \
+    make install-gqlgen

@@ -106,3 +106,14 @@ cobra-add: ## add cobra command
 		cobra add $(COBRA_CMD) \
 			--parent $(COBRA_PARENT_CMD) \
 			--config ../../$(COBRA_CONFIG)
+
+# ---
+# gqlgen: https://github.com/99designs/gqlgen
+# ---
+.PHONY: install-gqlgen
+install-gqlgen: ## install gqlgen
+	$(GOGET) github.com/99designs/gqlgen
+
+.PHONY: generate
+generate: ## generate codes
+	go generate ./...
