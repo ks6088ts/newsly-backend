@@ -12,18 +12,22 @@ import (
 	"github.com/ks6088ts/newsly-backend/graph/model"
 )
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	todo := &model.Todo{
-		Text: input.Text,
-		ID:   fmt.Sprintf("T%d", rand.Int()),
-		User: &model.User{ID: input.UserID, Name: "user " + input.UserID},
+func (r *mutationResolver) CreateArticle(ctx context.Context, input model.CreateArticleInput) (*model.Article, error) {
+	article := &model.Article{
+		ID:    fmt.Sprintf("T%d", rand.Int()),
+		URL:   input.URL,
+		Title: input.Title,
+		Source: &model.Source{
+			ID:   input.SourceID,
+			Name: "user " + input.SourceID,
+		},
 	}
-	r.todos = append(r.todos, todo)
-	return todo, nil
+	r.articles = append(r.articles, article)
+	return article, nil
 }
 
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	return r.todos, nil
+func (r *queryResolver) Articles(ctx context.Context) ([]*model.Article, error) {
+	return r.articles, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
