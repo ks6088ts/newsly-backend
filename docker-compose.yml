@@ -17,6 +17,7 @@ services:
       - HTTPS_PROXY=${HTTPS_PROXY}
       - DB_TYPE=${DB_TYPE}
       - DB_DATA_SOURCE_NAME=${DB_DATA_SOURCE_NAME}
+      - ALLOWED_ORIGIN=${ALLOWED_ORIGIN}
     ports:
       - ${PORT}:8080
     networks:

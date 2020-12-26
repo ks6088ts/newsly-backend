@@ -28,7 +28,8 @@ import (
 	"log"
 	"net/http"
 	"os"
-
+	"github.com/go-chi/chi"
+	"github.com/rs/cors"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/ks6088ts/newsly-backend/graph"
@@ -60,6 +61,17 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		router := chi.NewRouter()
+
+		// ref. https://gqlgen.com/recipes/cors/
+		// Add CORS middleware around every request
+		// See https://github.com/rs/cors for full option listing
+		router.Use(cors.New(cors.Options{
+			AllowedOrigins:   []string{os.Getenv("ALLOWED_ORIGIN")},
+			AllowCredentials: true,
+			Debug:            true,
+		}).Handler)
+
 		const defaultPort = "8080"
 
 		port := os.Getenv("PORT")
@@ -77,11 +89,11 @@ to quickly create a Cobra application.`,
 			ArticleRepository: repo,
 		}}))
 
-		http.Handle("/", playground.Handler("GraphQL playground", "/query"))
-		http.Handle("/query", srv)
+		router.Handle("/", playground.Handler("GraphQL playground", "/query"))
+		router.Handle("/query", srv)
 
 		log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
-		log.Fatal(http.ListenAndServe(":"+port, nil))
+		log.Fatal(http.ListenAndServe(":"+port, router))
 	},
 }
 
