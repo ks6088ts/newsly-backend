@@ -1,5 +1,7 @@
 package graph
 
+//go:generate go run github.com/99designs/gqlgen
+
 import "github.com/ks6088ts/newsly-backend/graph/model"
 
 // This file will not be regenerated automatically.
