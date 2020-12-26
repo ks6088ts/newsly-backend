@@ -32,6 +32,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/ks6088ts/newsly-backend/graph"
 	"github.com/ks6088ts/newsly-backend/graph/generated"
+	"github.com/ks6088ts/newsly-backend/repository"
 
 	"github.com/spf13/cobra"
 )
@@ -54,7 +55,9 @@ to quickly create a Cobra application.`,
 			port = defaultPort
 		}
 
-		srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+		srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{
+			ArticleRepository: repository.NewArticleMockRepository(),
+		}}))
 
 		http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 		http.Handle("/query", srv)

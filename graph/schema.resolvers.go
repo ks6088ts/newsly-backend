@@ -5,29 +5,26 @@ package graph
 
 import (
 	"context"
-	"fmt"
-	"math/rand"
+	"time"
 
 	"github.com/ks6088ts/newsly-backend/graph/generated"
 	"github.com/ks6088ts/newsly-backend/graph/model"
 )
 
 func (r *mutationResolver) CreateArticle(ctx context.Context, input model.CreateArticleInput) (*model.Article, error) {
-	article := &model.Article{
-		ID:    fmt.Sprintf("T%d", rand.Int()),
-		URL:   input.URL,
-		Title: input.Title,
+	return r.ArticleRepository.Create(ctx, &model.Article{
+		URL:       input.URL,
+		Title:     input.Title,
+		CreatedAt: time.Now(),
 		Source: &model.Source{
 			ID:   input.SourceID,
 			Name: "user " + input.SourceID,
 		},
-	}
-	r.articles = append(r.articles, article)
-	return article, nil
+	})
 }
 
 func (r *queryResolver) Articles(ctx context.Context) ([]*model.Article, error) {
-	return r.articles, nil
+	return r.ArticleRepository.GetAll(ctx)
 }
 
 // Mutation returns generated.MutationResolver implementation.

@@ -1,8 +1,8 @@
 package graph
 
-//go:generate go run github.com/99designs/gqlgen
+import "github.com/ks6088ts/newsly-backend/repository"
 
-import "github.com/ks6088ts/newsly-backend/graph/model"
+//go:generate go run github.com/99designs/gqlgen
 
 // This file will not be regenerated automatically.
 //
@@ -10,5 +10,5 @@ import "github.com/ks6088ts/newsly-backend/graph/model"
 
 // Resolver ...
 type Resolver struct {
-	articles []*model.Article
+	ArticleRepository repository.ArticleRepository
 }

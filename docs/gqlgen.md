@@ -1,6 +1,7 @@
 # gqlgen
 
 - [gqlgen](https://gqlgen.com/getting-started/)
+- [開発ライブ実況 #2 GoLand編 (メルペイSolutionsチーム デフォルト好きエンジニア)](https://www.youtube.com/watch?v=8MdxqDb07eQ)
 
 ```bash
 gqlgen init
