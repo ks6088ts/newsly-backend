@@ -8,6 +8,7 @@ import "github.com/ks6088ts/newsly-backend/graph/model"
 //
 // It serves as dependency injection for your app, add any dependencies you require here.
 
+// Resolver ...
 type Resolver struct {
 	articles []*model.Article
 }
