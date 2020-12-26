@@ -24,6 +24,7 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -36,6 +37,17 @@ import (
 
 	"github.com/spf13/cobra"
 )
+
+func getArticleRepository() (repository.ArticleRepository, error) {
+	db := os.Getenv("DB_TYPE")
+	if db == "mock" {
+		return repository.NewArticleMockRepository(), nil
+	}
+	if db == "postgresql" {
+		return repository.NewArticlePostgresqlRepository(os.Getenv("DB_DATA_SOURCE_NAME"))
+	}
+	return nil, fmt.Errorf("%v is not supported", db)
+}
 
 // serverCmd represents the server command
 var serverCmd = &cobra.Command{
@@ -55,8 +67,14 @@ to quickly create a Cobra application.`,
 			port = defaultPort
 		}
 
+		repo, err := getArticleRepository()
+		if err != nil {
+			fmt.Printf("failed to get repository: %v\n", err)
+			os.Exit(1)
+		}
+
 		srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{
-			ArticleRepository: repository.NewArticleMockRepository(),
+			ArticleRepository: repo,
 		}}))
 
 		http.Handle("/", playground.Handler("GraphQL playground", "/query"))
