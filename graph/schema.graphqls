@@ -1,0 +1,29 @@
+type Article {
+  id: ID!
+  title: String!
+  url: String!
+  createdAt: Time!
+  updatedAt: Time!
+  source: Source!
+}
+
+type Source {
+  id: ID!
+  name: String!
+}
+
+type Query {
+  articles: [Article!]!
+}
+
+input CreateArticleInput {
+  title: String!
+  url: String!
+  sourceId: ID!
+}
+
+type Mutation {
+  createArticle(input: CreateArticleInput!): Article!
+}
+
+scalar Time

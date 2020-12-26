@@ -68,15 +68,12 @@ tidy: ## tidy
 # FIXME: update commands as you like
 .PHONY: ci
 ci: install-dev install-cobra ## ci
-	make cobra-init
-	make cobra-add COBRA_CMD=hello
-	# https://github.com/spf13/cobra/pull/1099
-	# make lint # uncomment to activate lint 
+	make lint
 	make vet
 	make test
 	make crossbuild
 	$(OUT_DIR)/linux-amd64/$(REPO_NAME) --help
-	$(OUT_DIR)/linux-amd64/$(REPO_NAME) hello --help
+	$(OUT_DIR)/linux-amd64/$(REPO_NAME) server --help
 
 # ---
 # Cobra: https://github.com/spf13/cobra
@@ -106,3 +103,14 @@ cobra-add: ## add cobra command
 		cobra add $(COBRA_CMD) \
 			--parent $(COBRA_PARENT_CMD) \
 			--config ../../$(COBRA_CONFIG)
+
+# ---
+# gqlgen: https://github.com/99designs/gqlgen
+# ---
+.PHONY: install-gqlgen
+install-gqlgen: ## install gqlgen
+	$(GOGET) github.com/99designs/gqlgen
+
+.PHONY: generate
+generate: ## generate codes
+	go generate ./...
