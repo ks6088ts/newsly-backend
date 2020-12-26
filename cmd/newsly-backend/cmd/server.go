@@ -25,16 +25,16 @@ package cmd
 
 import (
 	"fmt"
-	"log"
-	"net/http"
-	"os"
-	"github.com/go-chi/chi"
-	"github.com/rs/cors"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/go-chi/chi"
 	"github.com/ks6088ts/newsly-backend/graph"
 	"github.com/ks6088ts/newsly-backend/graph/generated"
 	"github.com/ks6088ts/newsly-backend/repository"
+	"github.com/rs/cors"
+	"log"
+	"net/http"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -53,13 +53,8 @@ func getArticleRepository() (repository.ArticleRepository, error) {
 // serverCmd represents the server command
 var serverCmd = &cobra.Command{
 	Use:   "server",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "start GraphQL server",
+	Long:  `start GraphQL server`,
 	Run: func(cmd *cobra.Command, args []string) {
 		router := chi.NewRouter()
 
@@ -99,14 +94,4 @@ to quickly create a Cobra application.`,
 
 func init() {
 	rootCmd.AddCommand(serverCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// serverCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// serverCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

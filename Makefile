@@ -65,13 +65,8 @@ crossbuild: ## cross build
 tidy: ## tidy
 	go mod tidy
 
-# FIXME: update commands as you like
 .PHONY: ci
-ci: install-dev install-cobra ## ci
-	make lint
-	make vet
-	make test
-	make crossbuild
+ci: install-dev install-cobra format lint vet test crossbuild ## ci
 	$(OUT_DIR)/linux-amd64/$(REPO_NAME) --help
 	$(OUT_DIR)/linux-amd64/$(REPO_NAME) server --help
 
